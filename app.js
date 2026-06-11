@@ -67,7 +67,7 @@ function setupQuizForm() {
     };
 
     saveQuizResults(quizResults);
-    window.location.href = "./index.html";
+    window.location.href = "./index.html?completed=true";
   });
 }
 
@@ -143,7 +143,7 @@ function setupButtons() {
 
   if (primaryButton) {
     primaryButton.addEventListener("click", () => {
-      window.location.href = "./index.html";
+      window.location.href = "./index.html?completed=true";
     });
   }
 }
@@ -188,3 +188,22 @@ if (typeof module !== "undefined" && module.exports) {
   };
 }
 
+const startButton = document.getElementById("startButton");
+if (startButton) {
+  startButton.addEventListener("click", () => {
+    window.location.href = "quiz.html";
+  });
+}
+
+const params = new URLSearchParams(window.location.search);
+const body = document.body.classList;
+const quizResults = getQuizResults();
+const displayResults = params.get("completed") === "true" || Boolean(quizResults);
+
+if (displayResults) {
+  body.add("show-results");
+  body.remove("show-welcome");
+} else {
+  body.add("show-welcome");
+  body.remove("show-results");
+}
